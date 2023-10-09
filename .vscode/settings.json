@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "algos.h": "c",
+        "queue.h": "c"
+    }
+}
