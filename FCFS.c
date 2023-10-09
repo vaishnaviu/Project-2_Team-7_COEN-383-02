@@ -6,26 +6,29 @@
 
 void firstComeFirstServe(Queue *processQueue) {
 	int t = 0;
-    //Create Process Queue
 	Node *incoming_proc = processQueue->front;
-	if(incoming_proc == NULL) {
+	if(processQueue->size == 0) {
 		fprintf(stderr,"No Process to schedule\n");
 	}
-	//while process queue is not empty or time quanta is less than 100
-	Process * scheduledProcess = NULL;
 
+	Process * scheduledProcess = NULL;
+	Queue *arrivedProcesses = createQueue();
 	Queue *finishedProcesses = createQueue();
 	printf("\nFirst Come First Serve:\n");
 	while(t<100 || scheduledProcess!=NULL) {
-		//if there is no scheduled process, then check process queue and schedule it
-		if(scheduledProcess == NULL && processQueue->size > 0 && t>= ((Process *)(incoming_proc->data))->arrival_time) {
-			scheduledProcess = (Process *) dequeue(processQueue);
+
+		if(processQueue->size > 0 && ((Process*)incoming_proc->data)->arrival_time <= t) {
+			Process * new_process = (Process*) dequeue(processQueue);
+			enqueue(arrivedProcesses,new_process);
 			incoming_proc = processQueue->front;
+		}
+
+		if(scheduledProcess == NULL && arrivedProcesses->size > 0) {
+			scheduledProcess = (Process *) dequeue(arrivedProcesses);
 		}
 
 		if(scheduledProcess != NULL) {
 
-			//update current processes stat
 			if(scheduledProcess->startTime == -1) {
 				scheduledProcess->startTime = t;
 			}
@@ -38,7 +41,6 @@ void firstComeFirstServe(Queue *processQueue) {
 				scheduledProcess = NULL;
 			}
 		} 
-		//increase the time
 		t++;
 	}
 	printf("\n");

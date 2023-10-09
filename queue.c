@@ -77,7 +77,6 @@ void *dequeue(Queue *q)
     return NULL;
 }
 
-
 void displayQueue(Queue *q) {
 	Node *ptr = (Node *)q->front;
 	printf("<");
