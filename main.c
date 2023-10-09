@@ -6,6 +6,6 @@
 
 int main(int argc,char **argv) {
     Queue * processList = generateProcesses(10);
-    displayQueue(processList);
+    // displayQueue(processList);
     firstComeFirstServe(processList);
 }
