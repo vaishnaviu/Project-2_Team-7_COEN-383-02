@@ -85,6 +85,7 @@ void displayQueue(Queue *q) {
         printf("%c ",((Process *) ptr->data)->pid);
         printf(":");
         printf("%d ",((Process *) ptr->data)->arrival_time);
+		printf(" %d ",((Process *) ptr->data)->runtime);
         printf(";");
         ptr = ptr->next;
     }

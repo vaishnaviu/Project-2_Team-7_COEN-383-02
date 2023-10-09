@@ -22,6 +22,12 @@ Process * createProcess(char pid, int arrival_time, int runtime, int priority) {
     process->arrival_time = arrival_time;
 	process->runtime = runtime;
 	process->priority = priority;
+    process->startTime = -1;
+    process->endTime = -1;
+    process->turnaroundTime = 0;
+    process->responseTime = 0;
+    process->waitTime = 0;
+    process->executionTime = 0;
 	return process;
 }
 Queue *generateProcesses(int n) {

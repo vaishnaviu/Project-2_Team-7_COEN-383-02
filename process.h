@@ -7,6 +7,12 @@ struct process {
     int arrival_time;
     int runtime;
     int priority;
+    int startTime;
+    int endTime;
+    int responseTime;
+    int waitTime;
+    int turnaroundTime;
+    int executionTime;
 };
 
 typedef struct process Process;
