@@ -19,5 +19,6 @@ typedef struct process Process;
 
 Process *createProcess(char pid, int arrival_time, int runtime, int priority);
 Queue *generateProcesses(int n);
+int compare(void *data1, void *data2);
 
 #endif

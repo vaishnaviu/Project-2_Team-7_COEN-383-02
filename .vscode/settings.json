@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "algos.h": "c",
-        "queue.h": "c"
+        "queue.h": "c",
+        "string": "c",
+        "string_view": "c"
     }
 }
