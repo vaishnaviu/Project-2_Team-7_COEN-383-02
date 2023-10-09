@@ -4,52 +4,19 @@
 #include "../process.h"
 #include "../algos.h"
 
-averageStats print_policy_stat(Linked_List * ll)
+int comparePriority(void * data1, void * data2)
 {
-	averageStats avg;
-	//Print Process Stat
-	printf("\n");
-	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
-	printf("Process Name\t| Arrival Time | Start Time | End Time | Run Time | Response Time | Wait Time | Turn Around Time | Priority |\n");
-	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
-	Node * ptr = ll->front;
-	float avg_response_time = 0;
-	float avg_wait_time = 0;
-	float avg_turnaround = 0;
-	int process_count = 0;
-	while(ptr!=NULL) {
-		Process *stat = (Process *)ptr->data;
-		if(stat == NULL) printf("No Stat\n");
-		Process *proc = (Process *)stat->pid;
-		if(proc == NULL) printf("No Process\n");
-		float arrival_time = proc->arrival_time;
-		float runtime = proc->runtime;
-		float response_time = stat->startTime - arrival_time;
-		float turnaround = stat->endTime - proc->arrival_time + 1;
-		float wait_time = turnaround - runtime;
-		unsigned char priority = proc->priority;
-		avg_response_time += response_time;
-		avg_wait_time += wait_time;
-		avg_turnaround += turnaround;
-		process_count++;
-		printf("%16c|%14.1f|%12.1f|%10.1f|%10.1f|%15.1f|%11.1f| %17.1f|%10u|\n",proc->pid,arrival_time, stat->startTime, stat->endTime, runtime, response_time, wait_time, turnaround,priority);
-		ptr = ptr->next;
+  Process * ps1 = (Process *) data1;
+	Process * ps2 = (Process *) data2;
+	if(ps1->priority < ps2->priority) {
+		return -1;
+	}else if ((ps1->priority == ps2->priority) &&  (ps1->arrival_time < ps2->arrival_time))
+  {
+    return -1;
+  }
+   else {
+		return 1;
 	}
-	avg.avgThroughput = process_count;
-	if(process_count == 0) process_count = 1;
-	avg_response_time = avg_response_time / process_count;
-	avg_wait_time = avg_wait_time / process_count;
-	avg_turnaround = avg_turnaround / process_count;
-	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
-	printf("%16s|%14.1f|%12.1f|%10.1f|%10.1f|%15.1f|%11.1f| %17.1f|\n"," Average",0.0, 0.0, 0.0,0.0,avg_response_time, avg_wait_time, avg_turnaround);
-	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
-	//compute overall stat
-	//return stat
-	avg.avgResponseTime = avg_response_time;
-	avg.avgWaitTime = avg_wait_time;
-	avg.avgTurnaround = avg_turnaround;
-
-	return avg;
 }
 
 averageStats highest_priority_first_p(Queue *processes){
@@ -60,10 +27,10 @@ averageStats highest_priority_first_p(Queue *processes){
     Queue* q3 = createQueue();
     Queue* q4 = createQueue();
     //linked list for managaing process order in preemeption
-    Linked_List* ll_1 = createQueue();
-    Linked_List* ll_2 = createQueue();
-    Linked_List* ll_3 = createQueue();
-    Linked_List* ll_4 = createQueue();
+    Queue* ll_1 = createQueue();
+    Queue* ll_2 = createQueue();
+    Queue* ll_3 = createQueue();
+    Queue* ll_4 = createQueue();
 
     Node *incoming_proc = processes->front;
 	if(incoming_proc == NULL) {
@@ -87,14 +54,14 @@ averageStats highest_priority_first_p(Queue *processes){
         if(incoming_proc != NULL) {
 			Process * new_process = (Process *)(incoming_proc->data);
 			while(incoming_proc !=NULL && new_process->arrival_time <= t) {
-                if(new_process->priority == 1) enqueue(q1,create_process_stat(new_process));
-                if(new_process->priority == 2) enqueue(q2,create_process_stat(new_process));
-                if(new_process->priority == 3) enqueue(q3,create_process_stat(new_process));
-                if(new_process->priority == 4) enqueue(q4,create_process_stat(new_process));
-		        sort(q1,compare());
-                sort(q2,compare);
-                sort(q3,compare);
-                sort(q4,compare);
+                if(new_process->priority == 1) enqueue(q1,new_process);
+                if(new_process->priority == 2) enqueue(q2,new_process);
+                if(new_process->priority == 3) enqueue(q3,new_process);
+                if(new_process->priority == 4) enqueue(q4,new_process);
+		        sort(q1,comparePriority);
+                sort(q2,comparePriority);
+                sort(q3,comparePriority);
+                sort(q4,comparePriority);
 				incoming_proc = incoming_proc->next;
 				if(incoming_proc!=NULL){
 					new_process = (Process *)(incoming_proc->data);
@@ -127,23 +94,23 @@ averageStats highest_priority_first_p(Queue *processes){
   			//Process * proc = scheduledProcess->proc;
 
   			//add current running process to the time chart
-  			printf("%c",scheduledProcess->pid);
+  			//printf("%c",scheduledProcess->pid);
 
   			//update current processes stat
   			if(scheduledProcess->startTime == -1) {
   				scheduledProcess->startTime = t;
   			}
 
-  			scheduledProcess->runtime++;
+  			scheduledProcess->executionTime++;
 
             //printf("Process name %c", proc->pid);
 
-            if(scheduledProcess->runtime >= scheduledProcess->runtime) {
+            if(scheduledProcess->executionTime >= scheduledProcess->runtime) {
                 scheduledProcess->endTime = t;
-                if(scheduledProcess->priority == 1) add_node(ll_1,scheduledProcess);
-                else if(scheduledProcess->priority == 2) add_node(ll_2,scheduledProcess);
-                else if(scheduledProcess->priority == 3) add_node(ll_3,scheduledProcess);
-                else if(scheduledProcess->priority == 4) add_node(ll_4,scheduledProcess);
+                if(scheduledProcess->priority == 1) enqueue(ll_1,scheduledProcess);
+                else if(scheduledProcess->priority == 2) enqueue(ll_2,scheduledProcess);
+                else if(scheduledProcess->priority == 3) enqueue(ll_3,scheduledProcess);
+                else if(scheduledProcess->priority == 4) enqueue(ll_4,scheduledProcess);
                 //add_node(ll,scheduled_process);
                 scheduledProcess = NULL;
                 //free(scheduled_process);
@@ -171,7 +138,7 @@ averageStats highest_priority_first_p(Queue *processes){
     avg.avgResponseTime = (avg1.avgResponseTime + avg2.avgResponseTime + avg3.avgResponseTime + avg4.avgResponseTime)/4 ;
     avg.avgWaitTime = (avg1.avgWaitTime + avg2.avgWaitTime + avg3.avgWaitTime + avg4.avgWaitTime)/4 ;
     avg.avgTurnaround = (avg1.avgTurnaround + avg2.avgTurnaround + avg3.avgTurnaround + avg4.avgTurnaround)/4 ;
-    avg.avgThroughput = (avg1.avgThroughput + avg2.avgThroughput + avg3.avgThroughput + avg4.avgThroughput) ;
+    avg.avgThroughput = (avg1.avgThroughput + avg2.avgThroughput + avg3.avgThroughput + avg4.avgThroughput)/4 ;
 
     printf("The average statistics High Priority First Preemptive considering all priority queues is:\n");
     printf("Average Response Time : %.1f\n",avg.avgResponseTime);

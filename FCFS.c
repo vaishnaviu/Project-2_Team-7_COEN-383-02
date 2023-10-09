@@ -18,10 +18,12 @@ averageStats firstComeFirstServe(Queue *processQueue) {
 	printf("\nFirst Come First Serve:\n");
 	while(t<100 || scheduledProcess!=NULL) {
 		//check for incoming new process and enqueue it in the queue
-		if(processQueue->size > 0 && ((Process*)incoming_proc->data)->arrival_time <= t) {
-			Process * new_process = (Process*) dequeue(processQueue);
-			enqueue(arrivedProcesses,new_process);
-			incoming_proc = processQueue->front;
+		if(incoming_proc != NULL) {
+			Process * new_process = (Process *)(incoming_proc->data);
+			if(new_process->arrival_time <= t) {
+				enqueue(arrivedProcesses,new_process);
+				incoming_proc = incoming_proc->next;
+			}
 		}
 
 		if(scheduledProcess == NULL && arrivedProcesses->size > 0) {
