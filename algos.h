@@ -19,6 +19,7 @@ void firstComeFirstServe(Queue *processes);
 // averageStats highest_priority_first_np(Queue *processes);
 // averageStats highest_priority_first_p_aging(Queue *processes);
 // averageStats highest_priority_first_np_aging(Queue *processes);
+averageStats print_policy_stat(Queue * processes);
 
 
 #endif
