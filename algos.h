@@ -11,7 +11,7 @@ struct average_stats{
 
 typedef struct average_stats averageStats;
 
-void firstComeFirstServe(Queue *processes);
+averageStats firstComeFirstServe(Queue *processes);
 // averageStats shortest_job_first_np(Queue *processes);
 // averageStats shortest_remaining_time_p(Queue *processes);
 // averageStats round_robin_p(Queue *processes,int time_slice);

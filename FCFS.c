@@ -4,12 +4,11 @@
 #include "process.h"
 #include "algos.h"
 
-void firstComeFirstServe(Queue *processQueue) {
+averageStats firstComeFirstServe(Queue *processQueue) {
 	int t = 0;
 
 	if(processQueue->size == 0) {
 		fprintf(stderr,"No Process to schedule\n");
-		return;
 	}
 	Node *incoming_proc = processQueue->front;
 	//while process queue is not empty or time quanta is less than 100
@@ -45,5 +44,5 @@ void firstComeFirstServe(Queue *processQueue) {
 		t++;
 	}
 	printf("\n");
-	print_policy_stat(finishedProcesses);
+	return print_policy_stat(finishedProcesses);
 }
