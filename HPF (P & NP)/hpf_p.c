@@ -107,10 +107,10 @@ averageStats highest_priority_first_p(Queue *processes){
 
             if(scheduledProcess->executionTime >= scheduledProcess->runtime) {
                 scheduledProcess->endTime = t;
-                if(scheduledProcess->priority == 1) add_node(ll_1,scheduledProcess);
-                else if(scheduledProcess->priority == 2) add_node(ll_2,scheduledProcess);
-                else if(scheduledProcess->priority == 3) add_node(ll_3,scheduledProcess);
-                else if(scheduledProcess->priority == 4) add_node(ll_4,scheduledProcess);
+                if(scheduledProcess->priority == 1) enqueue(ll_1,scheduledProcess);
+                else if(scheduledProcess->priority == 2) enqueue(ll_2,scheduledProcess);
+                else if(scheduledProcess->priority == 3) enqueue(ll_3,scheduledProcess);
+                else if(scheduledProcess->priority == 4) enqueue(ll_4,scheduledProcess);
                 //add_node(ll,scheduled_process);
                 scheduledProcess = NULL;
                 //free(scheduled_process);
