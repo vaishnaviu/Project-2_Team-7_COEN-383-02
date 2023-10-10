@@ -31,6 +31,8 @@ averageStats firstComeFirstServe(Queue *processQueue) {
 		}
 
 		if(scheduledProcess != NULL) {
+			//add current running process to the time chart
+			printf("%c",scheduledProcess->pid);
 
 			if(scheduledProcess->startTime == -1) {
 				scheduledProcess->startTime = t;

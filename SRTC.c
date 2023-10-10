@@ -103,7 +103,8 @@ averageStats shortest_remaining_time_p(Queue *processes)
         // Execute the scheduled process or print an underscore if none is scheduled
         if (scheduledProcess != NULL)
         {
-
+            //add current running process to the time chart
+  			printf("%c",scheduledProcess->pid);
             // Update the current process's statistics
             if (scheduledProcess->startTime == -1)
             {
@@ -111,9 +112,6 @@ averageStats shortest_remaining_time_p(Queue *processes)
             }
 
             scheduledProcess->executionTime++;
-
-            printf("Process name %c", scheduledProcess->pid);
-            printf("Process name remaining time %d\n", (scheduledProcess->runtime - scheduledProcess->executionTime));
 
             // Check if the process has completed
             if (scheduledProcess->executionTime >= scheduledProcess->runtime)
