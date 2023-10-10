@@ -36,6 +36,8 @@ averageStats highest_priority_first_p(Queue *processes){
 	  if(process_pointer == NULL) {
 		  fprintf(stderr,"No Process to schedule\n");
 	  }
+
+    printf("\nHighest Priority First Preemptive:\n");
 	//while process queue is not empty or time quanta is less than 100
 	Process * scheduledProcess = NULL;
 
@@ -91,10 +93,9 @@ averageStats highest_priority_first_p(Queue *processes){
 		}
 
         if(scheduledProcess != NULL) {
-  			//Process * proc = scheduledProcess->proc;
 
   			//add current running process to the time chart
-  			//printf("%c",scheduledProcess->pid);
+  			printf("%c",scheduledProcess->pid);
 
   			//update current processes stat
   			if(scheduledProcess->startTime == -1) {

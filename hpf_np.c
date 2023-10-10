@@ -93,7 +93,7 @@ averageStats highest_priority_first_np(Queue * processes)
   			//Process * proc = scheduled_process->proc;
 
   			//add current running process to the time chart
-  			//printf("%c",proc->pid);
+  			printf("%c",scheduled_process->pid);
 
   			//update current processes stat
   			if(scheduled_process->startTime == -1) {

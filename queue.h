@@ -17,7 +17,6 @@ typedef struct queue Queue;
 
 Node* createNode(void *data);
 void swapNodes(Node *a, Node *b);
-void removeNode(Queue * ll, void *data);
 
 // Queue Implementation //
 Queue *createQueue();
