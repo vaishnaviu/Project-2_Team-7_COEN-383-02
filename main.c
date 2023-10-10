@@ -32,8 +32,8 @@ int main(int argc,char **argv) {
 		avg_fcfs[counter] = firstComeFirstServe(processList);
 		resetProcesses(processList);
 		//Run SJF
-		// avg_sjf[counter] = shortest_job_first_np(processList);
-		// resetProcesses(processList);
+		avg_sjf[counter] = shortest_job_first_np(processList);
+		resetProcesses(processList);
 		// //Run SRF
 		avg_srf[counter] = shortest_remaining_time_p(processList);
 		resetProcesses(processList);
@@ -110,12 +110,12 @@ int main(int argc,char **argv) {
 	printf("Average Wait Time : %.1f\n",final[0].avgWaitTime);
 	printf("Average Turn Around Time :%.1f\n",final[0].avgTurnaround);
 	printf("Average throughput :%.1f\n",final[0].avgThroughput);
-	// printf("-----------------------------------------------------------------------------------------------------------------------------\n");
-// 	printf("Shortest Job First Non Preemptive:\n");
-// 	printf("Average Response Time : %.1f\n",final[1].avgResponseTime);
-// 	printf("Average Wait Time : %.1f\n",final[1].avgWaitTime);
-// 	printf("Average Turn Around Time :%.1f\n",final[1].avgTurnaround);
-// 	printf("Average throughput :%.1f\n",final[1].avgThroughput);
+	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
+	printf("Shortest Job First Non Preemptive:\n");
+	printf("Average Response Time : %.1f\n",final[1].avgResponseTime);
+	printf("Average Wait Time : %.1f\n",final[1].avgWaitTime);
+	printf("Average Turn Around Time :%.1f\n",final[1].avgTurnaround);
+	printf("Average throughput :%.1f\n",final[1].avgThroughput);
 	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
 	printf("Shortest Remaining Time First Preemptive:\n");
 	printf("Average Response Time : %.1f\n",final[2].avgResponseTime);

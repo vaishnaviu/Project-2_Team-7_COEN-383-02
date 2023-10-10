@@ -8,7 +8,7 @@
 int compareRunTime(void *data1, void *data2) {
 	Process *ps1 = (Process *)data1;
 	Process *ps2 = (Process *)data2;
-	if((ps1->runtime - ps1->executionTime) < (ps2->runtime - ps2->executionTime)) 
+	if(ps1->runtime < ps2->runtime) 
 	{
 		return -1;
 	} 
@@ -40,7 +40,7 @@ averageStats shortest_job_first_np(Queue *processes) {
 			while(processPointer != NULL && newProcess->arrival_time <= timeQuantum) 
 			{
 				enqueue(processQueue, newProcess);
-				//sort(process_queue,compareRunTime);
+				sort(processQueue,compareRunTime);
 				processPointer = processPointer->next;
 				if(processPointer != NULL)
 					newProcess = (Process *)(processPointer->data);
@@ -63,9 +63,9 @@ averageStats shortest_job_first_np(Queue *processes) {
 			if(scheduledProcess->startTime == -1) {
 				scheduledProcess->startTime = timeQuantum;
 			}
-			scheduledProcess->runtime++;
+			scheduledProcess->executionTime++;
 
-			if(scheduledProcess->runtime >= proc->runtime) {
+			if(scheduledProcess->executionTime >= scheduledProcess->runtime) {
 				scheduledProcess->endTime = timeQuantum;
 				enqueue(ll,scheduledProcess);
 				scheduledProcess = NULL;
