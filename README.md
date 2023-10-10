@@ -9,7 +9,7 @@ This repository contains a C program that simulates various process scheduling a
 * Highest priority first (HPF) [non-preemptive]
 * Highest priority first (HPF) [preemptive]
 
-##Instructions to Compile and Run
+#Instructions to Compile and Run
 
 To compile the program, use the following command:
 
@@ -19,7 +19,7 @@ To run the program, use the following command:
 
 ./main
 
-##Simulation Details
+#Simulation Details
 
 * Each algorithm is run for 100 quanta (time slices).
 * Simulated processes are generated with random arrival times, expected run times, and priorities.
