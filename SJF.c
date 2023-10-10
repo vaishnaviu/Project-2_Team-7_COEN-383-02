@@ -80,37 +80,5 @@ averageStats shortest_job_first_np(Queue *processes) {
 
 	//Print Process Stat
 	return print_policy_stat(ll);
-	/*
-	printf("\nProcess Name\t| Arrival Time | Run Time | Response Time | Wait Time | Turn Around Time | Priority |\n");
-	node * ptr = ll->head;
-	float avg_response_time = 0;
-	float avg_wait_time = 0;
-	float avg_turnaround = 0;
-	int process_count = 0;
-	while(ptr!=NULL) {
-		process_stat *stat = (process_stat *)ptr->data;
-		if(stat == NULL) printf("No Stat\n");
-		process *proc = (process *)stat->proc;
-		if(proc == NULL) printf("No Process\n");
-		float arrival_time = proc->arrival_time;
-		float run_time = proc->run_time;
-		float response_time = stat->start_time - arrival_time;
-		float turnaround = stat->end_time - proc->arrival_time + 1;
-		float wait_time = turnaround - run_time;
-		unsigned char priority = proc->priority;
-		avg_response_time += response_time;
-		avg_wait_time += wait_time;
-		avg_turnaround += turnaround;
-		process_count++;
-		printf("%16c|%14.1f|%10.1f|%15.1f|%11.1f| %17.1f| %9u|\n",proc->pid,arrival_time, run_time, response_time, wait_time, turnaround, priority);
-		ptr = ptr->next;
-	}
-	avg_response_time = avg_response_time / process_count;
-	avg_wait_time = avg_wait_time / process_count;
-	avg_turnaround = avg_turnaround / process_count;
-	printf("-----------------------------------------------------------------------------------------------------\n");
-	printf("%16c|%14.1f|%10.1f|%15.1f|%11.1f| %17.1f\n",' ',0.0, 0.0, avg_response_time, avg_wait_time, avg_turnaround);
-	//compute overall stat
-	//return stat
-	*/
+	
 }
