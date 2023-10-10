@@ -21,7 +21,7 @@
 
 // Implementation of highest priority first non preemptive //
 
-averageStats highest_priority_first_np(linked_list * processes)
+averageStats highest_priority_first_np(Queue * processes)
 {
   int t = 0; // quanta //
   // creation of a queue of processes
@@ -29,11 +29,10 @@ averageStats highest_priority_first_np(linked_list * processes)
   Queue * q2 = createQueue();
   Queue * q3 = createQueue();
   Queue * q4 = createQueue();
-  // creation of linked list for managaing process order in preemeption
-  linked_list * ll_1 = createQueue();
-  linked_list * ll_2 = createQueue();
-  linked_list * ll_3 = createQueue();
-  linked_list * ll_4 = createQueue();
+  Queue * ll_1 = createQueue();
+  Queue * ll_2 = createQueue();
+  Queue * ll_3 = createQueue();
+  Queue * ll_4 = createQueue();
   Node * process_pointer = processes->front;
   if(processes->front == NULL) {
 		fprintf(stderr,"No Process to schedule\n");
@@ -107,10 +106,10 @@ averageStats highest_priority_first_np(linked_list * processes)
 
         if(scheduled_process->executionTime >= scheduled_process->runtime) {
           scheduled_process->endTime = t;
-          if(scheduled_process->priority == 1) addNode(ll_1,scheduled_process);
-          else if(scheduled_process->priority == 2) addNode(ll_2,scheduled_process);
-          else if(scheduled_process->priority == 3) addNode(ll_3,scheduled_process);
-          else if(scheduled_process->priority == 4) addNode(ll_4,scheduled_process);
+          if(scheduled_process->priority == 1) enqueue(ll_1,scheduled_process);
+          else if(scheduled_process->priority == 2) enqueue(ll_2,scheduled_process);
+          else if(scheduled_process->priority == 3) enqueue(ll_3,scheduled_process);
+          else if(scheduled_process->priority == 4) enqueue(ll_4,scheduled_process);
           //add_node(ll,scheduled_process);
           scheduled_process = NULL;
           //free(scheduled_process);

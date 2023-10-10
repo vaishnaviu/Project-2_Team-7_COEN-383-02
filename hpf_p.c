@@ -27,10 +27,10 @@ averageStats highest_priority_first_p(Queue *processes){
     Queue* q3 = createQueue();
     Queue* q4 = createQueue();
     //linked list for managaing process order in preemeption
-    linked_list* ll_1 = createQueue();
-    linked_list* ll_2 = createQueue();
-    linked_list* ll_3 = createQueue();
-    linked_list* ll_4 = createQueue();
+    Queue* ll_1 = createQueue();
+    Queue* ll_2 = createQueue();
+    Queue* ll_3 = createQueue();
+    Queue* ll_4 = createQueue();
 
     Node *process_pointer = processes->front;
 	  if(process_pointer == NULL) {
@@ -107,10 +107,10 @@ averageStats highest_priority_first_p(Queue *processes){
 
             if(scheduledProcess->executionTime >= scheduledProcess->runtime) {
                 scheduledProcess->endTime = t;
-                if(scheduledProcess->priority == 1) addNode(ll_1, scheduledProcess);
-                else if(scheduledProcess->priority == 2) addNode(ll_2, scheduledProcess);
-                else if(scheduledProcess->priority == 3) addNode(ll_3, scheduledProcess);
-                else if(scheduledProcess->priority == 4) addNode(ll_4, scheduledProcess);
+                if(scheduledProcess->priority == 1) enqueue(ll_1, scheduledProcess);
+                else if(scheduledProcess->priority == 2) enqueue(ll_2, scheduledProcess);
+                else if(scheduledProcess->priority == 3) enqueue(ll_3, scheduledProcess);
+                else if(scheduledProcess->priority == 4) enqueue(ll_4, scheduledProcess);
                 //add_node(ll,scheduled_process);
                 scheduledProcess = NULL;
                 //free(scheduled_process);

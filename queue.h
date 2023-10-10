@@ -13,12 +13,9 @@ struct queue {
 	int size;
 };
 
-typedef struct queue linked_list;
-
 typedef struct queue Queue;
 
 Node* createNode(void *data);
-Node* addNode(Queue *q, void *data);
 void swapNodes(Node *a, Node *b);
 void removeNode(Queue * ll, void *data);
 
