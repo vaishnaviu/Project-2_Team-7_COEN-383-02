@@ -5,13 +5,37 @@
 #include "algos.h"
 
 // Function to create a process_stat structure for a process
-process_stat *create_process_stat(Process *proc);
+Process *create_process_stat(Process *proc);
 
 // Comparator function for sorting processes based on remaining time to completion
-int compare_remaining_time(void *data1, void *data2);
+int compareRemainingTime(void *data1, void *data2)
+{
+  Process *ps1 = (Process *) data1;
+	Process *ps2 = (Process *) data2;
+	if((ps1->runtime - ps1->executionTime)< (ps2->runtime - ps2->executionTime)) {
+		return -1;
+	} else {
+		return 1;
+	}
+}
 
 // Function to print the contents of a queue for testing during shortest remaining time to completion
-void print_queue_srtc(Queue *q);
+void print_queue_srtc(Queue * q)
+{
+  if (q->front != NULL)
+  {
+    Node *n = q->front;
+    printf("Queue Contains:\n");
+    while(n != NULL)
+    {
+      Process *ps = n->data;
+      //Process *p = ps->Process;
+      printf("Process Id %c Remaining Time %d\n",ps->pid,(ps->runtime - ps->executionTime));
+      n = n->next;
+    }
+  }
+  return;
+}
 
 // Implementation of Shortest Remaining Time to Completion (SRTC) preemptive scheduling
 average_stats shortest_remaining_time_p(linked_list *processes) {
