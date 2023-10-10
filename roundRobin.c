@@ -1,51 +1,106 @@
+// roundrobin.c
 #include "algos.h"
-#include "queue.h"
 #include "process.h"
+#include "queue.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-// Function to run Round Robin (RR) scheduling algorithm
 averageStats roundRobinPreemptive(Queue *processes, int time_slice) {
-    averageStats avg_rr;
-    avg_rr = print_policy_stat(processes);  // Use the provided print_policy_stat function
+    int t = 0;
 
-    // Implement Round Robin Scheduling Algorithm with time slice of 1 quantum
-    Node *ptr = processes->front;
-    int remaining_time[processes->size];
-    for (int i = 0; i < processes->size; i++) {
-        Process *p = (Process *)ptr->data;
-        remaining_time[i] = p->runtime;
-        ptr = ptr->next;
+    // Creation of Process Queue
+    Queue *processQueue = createQueue();
+    Node *procPtr = processes->front;
+    if (processes->front == NULL) {
+        fprintf(stderr, "No Process to schedule\n");
     }
 
-    int time = 0;
-    int quantum = 1;  // Time slice for Round Robin
+    // Keep checking while time quanta is less than 100 or the process queue is empty...
+    Process *scheduledProcess = NULL;
 
-    while (1) {
-        int done = 1;
+    Queue *ll = createQueue();
+    printf("\nRound Robin Algorithm:\n");
+    Node *cur_node = NULL;
+    int cur_run = 0;
 
-        for (int i = 0; i < processes->size; i++) {
-            Process *p = (Process *)ptr->data;
-
-            if (remaining_time[i] > 0) {
-                done = 0;
-
-                // Process will run for the quantum or its remaining time, whichever is smaller
-                int run_time = (remaining_time[i] < quantum) ? remaining_time[i] : quantum;
-
-                // Update process times
-                time += run_time;
-                remaining_time[i] -= run_time;
-                p->endTime = time;
-
-                // Move the pointer to the next process in the queue
-                ptr = ptr->next;
+    while (t < 100 || processQueue->size > 0) {
+        // Check for incoming new process and do enqueue.
+        if (procPtr != NULL && t < 100) {
+            Process *newProcess = (Process *)(procPtr->data);
+            while (procPtr != NULL && newProcess->arrival_time <= t) {
+                enqueue(processQueue, newProcess);
+                procPtr = procPtr->next;
+                if (procPtr != NULL)
+                    newProcess = (Process *)(procPtr->data);
             }
         }
 
-        if (done)
-            break;
+        // Check process queue and schedule it if there is no scheduled process now..
+        if (cur_node == NULL) {
+            cur_run = 0;
+            cur_node = processQueue->front;
+        } else if (cur_run == time_slice) {
+            cur_run = 0;
+            cur_node = cur_node->next;
+            if (cur_node == NULL) {
+                cur_node = processQueue->front;
+            }
+        }
+
+        if (cur_node != NULL) {
+            scheduledProcess = (Process *)cur_node->data;
+            Process *proc = scheduledProcess;
+
+            if (t >= 100) {
+                if (scheduledProcess->startTime == -1) {
+                    // Do not start any new process, remove it from processQueue
+                    Node *next = cur_node->next;
+                    dequeue(processQueue);
+                    cur_node = next;
+                    cur_run = 0;
+                    continue;
+                }
+            }
+
+            // Add the currently running process to the time chart
+            printf("%c", proc->pid);
+            cur_run++;
+
+            // Update the current processes stat
+            if (scheduledProcess->startTime == -1) {
+                scheduledProcess->startTime = t;
+            }
+            scheduledProcess->runtime++;
+
+            if (scheduledProcess->runtime >= proc->runtime) {
+                scheduledProcess->endTime = t;
+                enqueue(ll, scheduledProcess);
+                Node *next = cur_node->next;
+                dequeue(processQueue);
+                cur_node = next;
+                cur_run = 0;
+            }
+        } else {
+            printf("_");
+        }
+
+        // Keep increasing the time
+        t++;
     }
 
-    return avg_rr;
+    // Create the average statistics
+    averageStats avg = print_policy_stat(ll);
+
+    // Free allocated memory
+    // Modify this based on your specific memory allocation
+    Node *currentNode = ll->front;
+    while (currentNode != NULL) {
+        free(currentNode->data);
+        Node *temp = currentNode;
+        currentNode = currentNode->next;
+        free(temp);
+    }
+    free(ll);
+
+    return avg;
 }
