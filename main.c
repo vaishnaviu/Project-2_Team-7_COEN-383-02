@@ -38,7 +38,7 @@ int main(int argc,char **argv) {
 		avg_srf[counter] = shortest_remaining_time_p(processList);
 		resetProcesses(processList);
 		// //Run RR
-		// avg_rr[counter] = roundRobinPreemptive(processList,5);
+		avg_rr[counter] = roundRobinPreemptive(processList,5);
 		// resetProcesses(processList);
 		// //Run HPF P
 		avg_hpfp[counter] = highest_priority_first_p(processList);
@@ -123,12 +123,12 @@ int main(int argc,char **argv) {
 	printf("Average Turn Around Time :%.1f\n",final[2].avgTurnaround);
 	printf("Average throughput :%.1f\n",final[2].avgThroughput);
 	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
-	// printf("Round Robin Preemptive:\n");
-	// printf("Average Response Time : %.1f\n",final[3].avgResponseTime);
-	// printf("Average Wait Time : %.1f\n",final[3].avgWaitTime);
-	// printf("Average Turn Around Time :%.1f\n",final[3].avgTurnaround);
-	// printf("Average throughput :%.1f\n",final[3].avgThroughput);
-	// printf("-----------------------------------------------------------------------------------------------------------------------------\n");
+	printf("Round Robin Preemptive:\n");
+	printf("Average Response Time : %.1f\n",final[3].avgResponseTime);
+	printf("Average Wait Time : %.1f\n",final[3].avgWaitTime);
+	printf("Average Turn Around Time :%.1f\n",final[3].avgTurnaround);
+	printf("Average throughput :%.1f\n",final[3].avgThroughput);
+	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
 	printf("Highest Priority First Preemptive:\n");
 	printf("Average Response Time : %.1f\n",final[4].avgResponseTime);
 	printf("Average Wait Time : %.1f\n",final[4].avgWaitTime);
