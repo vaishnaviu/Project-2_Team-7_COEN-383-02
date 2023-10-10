@@ -30,6 +30,23 @@ Process * createProcess(char pid, int arrival_time, int runtime, int priority) {
     process->executionTime = 0;
 	return process;
 }
+void resetProcess(Process * process) {
+    process->startTime = -1;
+    process->endTime = -1;
+    process->turnaroundTime = 0;
+    process->responseTime = 0;
+    process->waitTime = 0;
+    process->executionTime = 0;
+}
+void resetProcesses(Queue * processes) {
+	Node* currentProcess = processes->front;
+	int processCtr = 0;
+	while(processCtr < processes->size) {
+		resetProcess(currentProcess->data);
+		currentProcess = currentProcess->next;
+		processCtr += 1;
+	}
+}
 Queue *generateProcesses(int n) {
 	Queue *processList = createQueue();
 	char pid = 'A';

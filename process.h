@@ -19,5 +19,7 @@ typedef struct process Process;
 
 Process *createProcess(char pid, int arrival_time, int runtime, int priority);
 Queue *generateProcesses(int n);
+void resetProcess(Process * process);
+void resetProcesses(Queue * processes);
 
 #endif

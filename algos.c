@@ -21,7 +21,7 @@ averageStats print_policy_stat(Queue * processes)
 		int arrival_time = process->arrival_time;
 		int run_time = process->runtime;
 		int response_time = process->startTime - arrival_time;
-		int turnaround = process->endTime - process->arrival_time;
+		int turnaround = process->endTime - process->arrival_time + 1;
 		int wait_time = turnaround - run_time;
 		unsigned int priority = process->priority;
 		avg_response_time += response_time;
@@ -38,7 +38,7 @@ averageStats print_policy_stat(Queue * processes)
 	avg_turnaround = avg_turnaround / process_count;
 	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
 	printf("%16s|%14.1f|%12.1f|%10.1f|%10.1f|%15.1f|%11.1f| %17.1f|\n"," Average",0.0, 0.0, 0.0,0.0,avg_response_time, avg_wait_time, avg_turnaround);
-	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
+	printf("------------------------------------------go-----------------------------------------------------------------------------------\n");
 	//compute overall stat
 	//return stat
 	avg.avgResponseTime = avg_response_time;

@@ -112,6 +112,9 @@ averageStats shortest_remaining_time_p(Queue *processes)
 
             scheduledProcess->executionTime++;
 
+            printf("Process name %c", scheduledProcess->pid);
+            printf("Process name remaining time %d\n", (scheduledProcess->runtime - scheduledProcess->executionTime));
+
             // Check if the process has completed
             if (scheduledProcess->executionTime >= scheduledProcess->runtime)
             {
