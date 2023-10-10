@@ -27,11 +27,12 @@ averageStats highest_priority_first_p(Queue *processes){
     Queue* q3 = createQueue();
     Queue* q4 = createQueue();
     //linked list for managaing process order in preemeption
-    Queue* ll_1 = createQueue();
-    Queue* ll_2 = createQueue();
-    Queue* ll_3 = createQueue();
-    Queue* ll_4 = createQueue();
+    linked_list* ll_1 = createQueue();
+    linked_list* ll_2 = createQueue();
+    linked_list* ll_3 = createQueue();
+    linked_list* ll_4 = createQueue();
 
+<<<<<<< Updated upstream
     Node *incoming_proc = processes->front;
 	if(incoming_proc == NULL) {
 		fprintf(stderr,"No Process to schedule\n");
@@ -39,6 +40,14 @@ averageStats highest_priority_first_p(Queue *processes){
   printf("\nHighest Priority First Preemptive:\n");
 	//while process queue is not empty or time quanta is less than 100
 	Process * scheduledProcess = NULL;
+=======
+    Node *process_pointer = processes->front;
+	  if(process_pointer == NULL) {
+		  fprintf(stderr,"No Process to schedule\n");
+	  }
+	  //while process queue is not empty or time quanta is less than 100
+	  Process * scheduledProcess = NULL;
+>>>>>>> Stashed changes
 
     while(t<100 || scheduledProcess!=NULL){
 
@@ -52,9 +61,9 @@ averageStats highest_priority_first_p(Queue *processes){
             //scheduled_process = NULL;
         }
 
-        if(incoming_proc != NULL) {
-			Process * new_process = (Process *)(incoming_proc->data);
-			while(incoming_proc !=NULL && new_process->arrival_time <= t) {
+        if(process_pointer != NULL) {
+			Process * new_process = (Process *)(process_pointer->data);
+			while(process_pointer !=NULL && new_process->arrival_time <= t) {
                 if(new_process->priority == 1) enqueue(q1,new_process);
                 if(new_process->priority == 2) enqueue(q2,new_process);
                 if(new_process->priority == 3) enqueue(q3,new_process);
@@ -63,9 +72,9 @@ averageStats highest_priority_first_p(Queue *processes){
                 sort(q2,comparePriority);
                 sort(q3,comparePriority);
                 sort(q4,comparePriority);
-				incoming_proc = incoming_proc->next;
-				if(incoming_proc!=NULL){
-					new_process = (Process *)(incoming_proc->data);
+				process_pointer = process_pointer->next;
+				if(process_pointer!=NULL){
+					new_process = (Process *)(process_pointer->data);
                 }
 			}
       // sort all the processes that have arrived based on their remaining running time to completion //
@@ -103,10 +112,10 @@ averageStats highest_priority_first_p(Queue *processes){
 
             if(scheduledProcess->executionTime >= scheduledProcess->runtime) {
                 scheduledProcess->endTime = t;
-                if(scheduledProcess->priority == 1) enqueue(ll_1,scheduledProcess);
-                else if(scheduledProcess->priority == 2) enqueue(ll_2,scheduledProcess);
-                else if(scheduledProcess->priority == 3) enqueue(ll_3,scheduledProcess);
-                else if(scheduledProcess->priority == 4) enqueue(ll_4,scheduledProcess);
+                if(scheduledProcess->priority == 1) addNode(ll_1, scheduledProcess);
+                else if(scheduledProcess->priority == 2) addNode(ll_2, scheduledProcess);
+                else if(scheduledProcess->priority == 3) addNode(ll_3, scheduledProcess);
+                else if(scheduledProcess->priority == 4) addNode(ll_4, scheduledProcess);
                 //add_node(ll,scheduled_process);
                 scheduledProcess = NULL;
                 //free(scheduled_process);

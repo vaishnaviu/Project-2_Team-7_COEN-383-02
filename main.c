@@ -29,23 +29,23 @@ int main(int argc,char **argv) {
 		printf("-----------------------------------------------------------------------------------------------------------------------------\n");
 
 		//Run FCFS
-		avg_fcfs[counter] = firstComeFirstServe(processList);
-		resetProcesses(processList);
+		//avg_fcfs[counter] = firstComeFirstServe(processList);
+		//resetProcesses(processList);
 		//Run SJF
 		// avg_sjf[counter] = shortest_job_first_np(processList);
 		// resetProcesses(processList);
 		// //Run SRF
-		avg_srf[counter] = shortest_remaining_time_p(processList);
-		resetProcesses(processList);
+		//avg_srf[counter] = shortest_remaining_time_p(processList);
+		//resetProcesses(processList);
 		// //Run RR
 		// avg_rr[counter] = roundRobinPreemptive(processList,5);
 		// resetProcesses(processList);
 		// //Run HPF P
-		avg_hpfp[counter] = highest_priority_first_p(processList);
-		resetProcesses(processList);
+		//avg_hpfp[counter] = highest_priority_first_p(processList);
+		//resetProcesses(processList);
 		//Run HPF NP
-		// avg_hpfnp[counter] = highest_priority_first_np(processList);
-		// resetProcesses(processList);
+		avg_hpfnp[counter] = highest_priority_first_np(processList);
+		resetProcesses(processList);
 		//Run HPF P Aging
 		//Run HPF NP Aging
 		counter++;
@@ -105,40 +105,40 @@ int main(int argc,char **argv) {
 	printf("*****************************************************************************************************************************\n");
 	printf("\nThe average of the 5 runs of all algorithms is as follows:\n");
 	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
-	printf("First Come First Serve:\n");
+	/*printf("First Come First Serve:\n");
 	printf("Average Response Time : %.1f\n",final[0].avgResponseTime);
 	printf("Average Wait Time : %.1f\n",final[0].avgWaitTime);
 	printf("Average Turn Around Time :%.1f\n",final[0].avgTurnaround);
 	printf("Average throughput :%.1f\n",final[0].avgThroughput);
-	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
+	printf("-----------------------------------------------------------------------------------------------------------------------------\n");*/
 // 	printf("Shortest Job First Non Preemptive:\n");
 // 	printf("Average Response Time : %.1f\n",final[1].avgResponseTime);
 // 	printf("Average Wait Time : %.1f\n",final[1].avgWaitTime);
 // 	printf("Average Turn Around Time :%.1f\n",final[1].avgTurnaround);
 // 	printf("Average throughput :%.1f\n",final[1].avgThroughput);
-	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
+	/*printf("-----------------------------------------------------------------------------------------------------------------------------\n");
 	printf("Shortest Remaining Time First Preemptive:\n");
 	printf("Average Response Time : %.1f\n",final[2].avgResponseTime);
 	printf("Average Wait Time : %.1f\n",final[2].avgWaitTime);
 	printf("Average Turn Around Time :%.1f\n",final[2].avgTurnaround);
 	printf("Average throughput :%.1f\n",final[2].avgThroughput);
-	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
+	printf("-----------------------------------------------------------------------------------------------------------------------------\n");*/
 	// printf("Round Robin Preemptive:\n");
 	// printf("Average Response Time : %.1f\n",final[3].avgResponseTime);
 	// printf("Average Wait Time : %.1f\n",final[3].avgWaitTime);
 	// printf("Average Turn Around Time :%.1f\n",final[3].avgTurnaround);
 	// printf("Average throughput :%.1f\n",final[3].avgThroughput);
 	// printf("-----------------------------------------------------------------------------------------------------------------------------\n");
-	printf("Highest Priority First Preemptive:\n");
+	/*printf("Highest Priority First Preemptive:\n");
 	printf("Average Response Time : %.1f\n",final[4].avgResponseTime);
 	printf("Average Wait Time : %.1f\n",final[4].avgWaitTime);
 	printf("Average Turn Around Time :%.1f\n",final[4].avgTurnaround);
 	printf("Average throughput :%.1f\n",final[4].avgThroughput);
-	// printf("-----------------------------------------------------------------------------------------------------------------------------\n");
-// 	printf("Highest Priority First Non Preemptive:\n");
-// 	printf("Average Response Time : %.1f\n",final[5].avgResponseTime);
-// 	printf("Average Wait Time : %.1f\n",final[5].avgWaitTime);
-// 	printf("Average Turn Around Time :%.1f\n",final[5].avgTurnaround);
-// 	printf("Average throughput :%.1f\n",final[5].avgThroughput);
-// 	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
+	// printf("-----------------------------------------------------------------------------------------------------------------------------\n");*/
+ 	printf("Highest Priority First Non Preemptive:\n");
+ 	printf("Average Response Time : %.1f\n",final[5].avgResponseTime);
+ 	printf("Average Wait Time : %.1f\n",final[5].avgWaitTime);
+ 	printf("Average Turn Around Time :%.1f\n",final[5].avgTurnaround);
+ 	printf("Average throughput :%.1f\n",final[5].avgThroughput);
+ 	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
 }
