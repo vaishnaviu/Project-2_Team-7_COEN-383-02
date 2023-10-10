@@ -5,97 +5,111 @@
 #include "algos.h"
 
 // Function to create a process_stat structure for a process
-process_stat *create_process_stat(Process *proc);
+Process *createProcessStat(Process *proc);
 
 // Comparator function for sorting processes based on remaining time to completion
-int compare_remaining_time(void *data1, void *data2);
+int compareRemainingTime(void *data1, void *data2);
 
 // Function to print the contents of a queue for testing during shortest remaining time to completion
 void print_queue_srtc(Queue *q);
 
 // Implementation of Shortest Remaining Time to Completion (SRTC) preemptive scheduling
-average_stats shortest_remaining_time_p(linked_list *processes) {
-    int time_quantum = 0;
+averageStats shortest_remaining_time_p(Queue *processes)
+{
+    int timeQuantum = 0;
 
     // Create a queue for processes
-    queue *process_queue = create_queue();
-    
+    Queue *processQueue = createQueue();
+
     // Create a linked list for managing the order of processes during preemption
-    linked_list *order_list = create_linked_list();
+    Queue *orderQueue = createQueue();
 
     // Point to the head of the process list
-    node *process_pointer = processes->head;
+    Node *processPointer = processes->front;
 
     // Check if there are processes to schedule
-    if (process_pointer == NULL) {
+    if (processPointer == NULL)
+    {
         fprintf(stderr, "No processes to schedule\n");
     }
 
     // While the process queue is not empty or the time quantum is less than 100
-    process_stat *scheduled_process = NULL;
+    Process *scheduledProcess = NULL;
     printf("\n\nShortest Remaining Time To Completion Preemptive:\n");
 
-    while (time_quantum < 100 || scheduled_process != NULL) {
+    while (timeQuantum < 100 || scheduledProcess != NULL)
+    {
         // If there is a scheduled process, enqueue it
-        if (scheduled_process != NULL) {
-            enqueue(process_queue, scheduled_process);
-            scheduled_process = NULL;
+        if (scheduledProcess != NULL)
+        {
+            enqueue(processQueue, scheduledProcess);
+            scheduledProcess = NULL;
         }
 
         // Check for incoming new processes and enqueue them in the queue
-        if (process_pointer != NULL) {
-            process *new_process = (process *)(process_pointer->data);
-            while (process_pointer != NULL && new_process->arrival_time <= time_quantum) {
-                enqueue(process_queue, create_process_stat(new_process));
-                process_pointer = process_pointer->next;
+        if (processPointer != NULL)
+        {
+            Process *newProcess = (Process *)(processPointer->data);
+            while (processPointer != NULL && newProcess->arrival_time <= timeQuantum)
+            {
+                enqueue(processQueue, createProcessStat(newProcess));
+                processPointer = processPointer->next;
 
-                if (process_pointer != NULL) {
-                    new_process = (process *)(process_pointer->data);
+                if (processPointer != NULL)
+                {
+                    newProcess = (Process *)(processPointer->data);
                 }
             }
 
             // Sort all the processes that have arrived based on their remaining time to completion
-            sort(process_queue, compare_remaining_time);
+            sort(processQueue, compareRemainingTime);
         }
 
         // If there is no scheduled process, check the process queue and schedule one
-        if (scheduled_process == NULL && process_queue->size > 0) {
-            scheduled_process = (process_stat *)dequeue(process_queue);
+        if (scheduledProcess == NULL && processQueue->size > 0)
+        {
+            scheduledProcess = (Process *)dequeue(processQueue);
 
             // If the process has not started before the time quantum of 100, remove it from the queue
-            while (time_quantum >= 100 && scheduled_process->start_time == -1) {
-                scheduled_process = (process_stat *)dequeue(process_queue);
+            while (timeQuantum >= 100 && scheduledProcess->startTime == -1)
+            {
+                scheduledProcess = (Process *)dequeue(processQueue);
             }
         }
 
         // Execute the scheduled process or print an underscore if none is scheduled
-        if (scheduled_process != NULL) {
-            process *current_process = scheduled_process->proc;
+        if (scheduledProcess != NULL)
+        {
+            Process *currentProcess = scheduledProcess;
 
             // Add the current running process to the time chart
-            printf("%c", current_process->pid);
+            printf("%c", currentProcess->pid);
 
             // Update the current process's statistics
-            if (scheduled_process->start_time == -1) {
-                scheduled_process->start_time = time_quantum;
+            if (scheduledProcess->startTime == -1)
+            {
+                scheduledProcess->startTime = timeQuantum;
             }
 
-            scheduled_process->run_time++;
+            scheduledProcess->executionTime++;
 
             // Check if the process has completed
-            if (scheduled_process->run_time >= current_process->run_time) {
-                scheduled_process->end_time = time_quantum;
-                add_node(order_list, scheduled_process);
-                scheduled_process = NULL;
+            if (scheduledProcess->executionTime >= currentProcess->runtime)
+            {
+                scheduledProcess->endTime = timeQuantum;
+                enqueue(orderQueue, scheduledProcess);
+                scheduledProcess = NULL;
             }
-        } else {
+        }
+        else
+        {
             printf("_");
         }
 
         // Increase the time quantum
-        time_quantum++;
+        timeQuantum++;
     }
 
     // Print Process Statistics
-    return print_policy_stat(order_list);
+    return print_policy_stat(orderQueue);
 }
