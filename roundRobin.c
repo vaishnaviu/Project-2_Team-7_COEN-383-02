@@ -30,7 +30,7 @@ averageStats roundRobinPreemptive(Queue *processes, int time_slice) {
 
     int currentRun = 0;  // Current run within the time slice
 
-    // Keep checking while time quanta is less than 100 or the process queue is not empty
+    // Continue checking while time is below 100 or the process queue is not empty
     while (t < 100 || processQueue->size > 0) {
         // Check for incoming new processes and enqueue them
         if (processPointer != NULL && t < 100) {
@@ -43,7 +43,7 @@ averageStats roundRobinPreemptive(Queue *processes, int time_slice) {
             }
         }
 
-        // Check the process queue and schedule a process if needed
+        // Check the process queue and schedule a process if required
         if (currentProcNode == NULL) {
             currentRun = 0;
             currentProcNode = processQueue->front;
@@ -63,7 +63,7 @@ averageStats roundRobinPreemptive(Queue *processes, int time_slice) {
 
             if (t >= 100) {
                 if (scheduledProcess->startTime == -1) {
-                    // Do not start any new process, remove it from processQueue
+                    // Remove process from processQueue without starting a new one
                     Node *next = currentProcNode->next;
                     dequeue(processQueue);
                     currentProcNode = next;
@@ -72,19 +72,18 @@ averageStats roundRobinPreemptive(Queue *processes, int time_slice) {
                 }
             }
 
-            // Add the currently running process to the time chart
+            // Record the current running process on the time chart
 			printf("%c",scheduledProcess->pid);
             currentRun++;
 
-            // Update the current process's stats
+            // Update current process statistics
             if (scheduledProcess->startTime == -1) {
                 scheduledProcess->startTime = t;
             }
             scheduledProcess->executionTime++;
 
-
             if (scheduledProcess->executionTime >= scheduledProcess->runtime) {
-                // The process has completed its execution
+                // Process execution completed
                 scheduledProcess->endTime = t;
                 enqueue(ll_queue, scheduledProcess);
                 Node *next = currentProcNode->next;
@@ -93,13 +92,13 @@ averageStats roundRobinPreemptive(Queue *processes, int time_slice) {
                 currentRun = 0;
             }
         } else {
-            // No process is scheduled, print an underscore to denote idle time
+            // Print underscore for idle time when no process is scheduled
             printf("_");
         }
         // Move to the next time quanta
         t++;
     }
 
-    // Create the average statistics
+    // Generate average statistics
     return print_policy_stat(ll_queue);
 }
