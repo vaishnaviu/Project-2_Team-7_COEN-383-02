@@ -50,6 +50,8 @@ averageStats roundRobinPreemptive(Queue *processes, int time_slice) {
         } else if (currentRun == time_slice) {
             currentRun = 0;
             currentProcNode = currentProcNode->next;
+            Process* process_to_preempt = dequeue(processQueue);
+            enqueue(processQueue, process_to_preempt);
             if (currentProcNode == NULL) {
                 currentProcNode = processQueue->front;
             }
@@ -63,7 +65,8 @@ averageStats roundRobinPreemptive(Queue *processes, int time_slice) {
                 if (scheduledProcess->startTime == -1) {
                     // Do not start any new process, remove it from processQueue
                     Node *next = currentProcNode->next;
-                    removeNode(processQueue,currentProcNode->data);
+                    // removeNode(processQueue,currentProcNode->data);
+                    dequeue(processQueue);
                     currentProcNode = next;
                     currentRun = 0;
                     continue;
@@ -81,11 +84,12 @@ averageStats roundRobinPreemptive(Queue *processes, int time_slice) {
             scheduledProcess->executionTime++;
 
 
-            if (scheduledProcess->executionTime > scheduledProcess->runtime) {
+            if (scheduledProcess->executionTime >= scheduledProcess->runtime) {
                 // The process has completed its execution
                 scheduledProcess->endTime = t;
                 enqueue(ll_queue, scheduledProcess);
                 Node *next = currentProcNode->next;
+                dequeue(processQueue);
                 removeNode(processQueue,currentProcNode->data);
                 currentProcNode = next;
                 currentRun = 0;
