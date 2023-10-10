@@ -65,7 +65,6 @@ averageStats roundRobinPreemptive(Queue *processes, int time_slice) {
                 if (scheduledProcess->startTime == -1) {
                     // Do not start any new process, remove it from processQueue
                     Node *next = currentProcNode->next;
-                    // removeNode(processQueue,currentProcNode->data);
                     dequeue(processQueue);
                     currentProcNode = next;
                     currentRun = 0;
@@ -90,7 +89,6 @@ averageStats roundRobinPreemptive(Queue *processes, int time_slice) {
                 enqueue(ll_queue, scheduledProcess);
                 Node *next = currentProcNode->next;
                 dequeue(processQueue);
-                removeNode(processQueue,currentProcNode->data);
                 currentProcNode = next;
                 currentRun = 0;
             }
