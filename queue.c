@@ -9,7 +9,24 @@ Node *createNode(void *data)
 	Node *newNode = (Node*) malloc(sizeof(Node));
 	newNode->data = data;
 	newNode->next = NULL;
+	newNode->prev = NULL;
 	return newNode;
+}
+
+Node *addNode(linked_list * ll, void * data){
+	Node * new_node = createNode(data);
+	if(ll->size == 0)
+	{
+		ll->front = new_node;
+		ll->rear = new_node;
+		ll->size = 1 ;
+	} else {
+		new_node->prev = ll->rear;
+		ll->rear->next = new_node;
+		ll->rear = new_node;
+		ll->size += 1;
+	}
+	return new_node;
 }
 
 Queue * createQueue()

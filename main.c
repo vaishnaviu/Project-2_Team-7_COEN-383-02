@@ -44,8 +44,8 @@ int main(int argc,char **argv) {
 		avg_hpfp[counter] = highest_priority_first_p(processList);
 		resetProcesses(processList);
 		//Run HPF NP
-		// avg_hpfnp[counter] = highest_priority_first_np(processList);
-		// resetProcesses(processList);
+		avg_hpfnp[counter] = highest_priority_first_np(processList);
+		resetProcesses(processList);
 		//Run HPF P Aging
 		//Run HPF NP Aging
 		counter++;
@@ -134,11 +134,11 @@ int main(int argc,char **argv) {
 	printf("Average Wait Time : %.1f\n",final[4].avgWaitTime);
 	printf("Average Turn Around Time :%.1f\n",final[4].avgTurnaround);
 	printf("Average throughput :%.1f\n",final[4].avgThroughput);
-	// printf("-----------------------------------------------------------------------------------------------------------------------------\n");
-// 	printf("Highest Priority First Non Preemptive:\n");
-// 	printf("Average Response Time : %.1f\n",final[5].avgResponseTime);
-// 	printf("Average Wait Time : %.1f\n",final[5].avgWaitTime);
-// 	printf("Average Turn Around Time :%.1f\n",final[5].avgTurnaround);
-// 	printf("Average throughput :%.1f\n",final[5].avgThroughput);
-// 	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
+	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
+ 	printf("Highest Priority First Non Preemptive:\n");
+ 	printf("Average Response Time : %.1f\n",final[5].avgResponseTime);
+ 	printf("Average Wait Time : %.1f\n",final[5].avgWaitTime);
+ 	printf("Average Turn Around Time :%.1f\n",final[5].avgTurnaround);
+ 	printf("Average throughput :%.1f\n",final[5].avgThroughput);
+ 	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
 }
