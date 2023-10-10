@@ -9,7 +9,7 @@ averageStats roundRobinPreemptive(Queue *processes, int time_slice) {
     int t = 0;
 
     // Creation of Process Queue
-    Queue *processQueue = createQueue();
+    Queue *processQueue = (Queue *)createQueue();
     Node *procPtr = processes->front;
     if (processes->front == NULL) {
         fprintf(stderr, "No Process to schedule\n");
@@ -54,8 +54,9 @@ averageStats roundRobinPreemptive(Queue *processes, int time_slice) {
             if (t >= 100) {
                 if (scheduledProcess->startTime == -1) {
                     // Do not start any new process, remove it from processQueue
+                    // free(scheduledProcess);
                     Node *next = cur_node->next;
-                    dequeue(processQueue);
+                    removeNode(processQueue,cur_node->data);
                     cur_node = next;
                     cur_run = 0;
                     continue;
@@ -70,13 +71,14 @@ averageStats roundRobinPreemptive(Queue *processes, int time_slice) {
             if (scheduledProcess->startTime == -1) {
                 scheduledProcess->startTime = t;
             }
-            scheduledProcess->runtime++;
+            scheduledProcess->executionTime++;
 
-            if (scheduledProcess->runtime >= proc->runtime) {
+            if (scheduledProcess->executionTime >= proc->runtime) {
+                //start+run
                 scheduledProcess->endTime = t;
                 enqueue(ll, scheduledProcess);
                 Node *next = cur_node->next;
-                dequeue(processQueue);
+                removeNode(processQueue,cur_node->data);
                 cur_node = next;
                 cur_run = 0;
             }
@@ -89,18 +91,18 @@ averageStats roundRobinPreemptive(Queue *processes, int time_slice) {
     }
 
     // Create the average statistics
-    averageStats avg = print_policy_stat(ll);
+    return print_policy_stat(ll);
 
     // Free allocated memory
     // Modify this based on your specific memory allocation
-    Node *currentNode = ll->front;
-    while (currentNode != NULL) {
-        free(currentNode->data);
-        Node *temp = currentNode;
-        currentNode = currentNode->next;
-        free(temp);
-    }
-    free(ll);
+    // Node *currentNode = ll->front;
+    // while (currentNode != NULL) {
+    //     free(currentNode->data);
+    //     Node *temp = currentNode;
+    //     currentNode = currentNode->next;
+    //     free(temp);
+    // }
+    // free(ll);
 
-    return avg;
+    // return avg;
 }

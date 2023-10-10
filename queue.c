@@ -91,3 +91,25 @@ void displayQueue(Queue *q) {
     printf(">\n");
 }
 
+void removeNode(Queue * ll, void *data)
+{
+	Node *current_node = ll->front;
+	Node* prev = NULL;
+
+	while(current_node != NULL && current_node->data != data) {
+		prev = current_node;
+		current_node = current_node->next;
+	}
+
+	if(current_node != NULL) {
+		if(prev != NULL) {
+			prev->next = current_node->next;
+		}
+		if(ll->front == current_node) {
+			ll->front = current_node->next;
+		}
+		ll->size --;
+		free(current_node);
+	}
+}
+
