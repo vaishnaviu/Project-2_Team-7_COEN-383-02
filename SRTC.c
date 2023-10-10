@@ -4,7 +4,7 @@
 #include "process.h"
 #include "algos.h"
 
-// Comparator function for sorting processes based on remaining time to completion
+
 int compareRemainingTime(void *data1, void *data2)
 {
     Process *ps1 = (Process *)data1;
@@ -19,7 +19,7 @@ int compareRemainingTime(void *data1, void *data2)
     }
 }
 
-// Function to print the contents of a queue for testing during shortest remaining time to completion
+
 void print_queue_srtc(Queue *q)
 {
     if (q->front != NULL)
@@ -41,16 +41,16 @@ averageStats shortest_remaining_time_p(Queue *processes)
 {
     int timeQuantum = 0;
 
-    // Create a queue for processes
+    // queue for processes
     Queue *processQueue = createQueue();
 
-    // Create a linked list for managing the order of processes during preemption
+    //linked list for managing the order of processes
     Queue *orderQueue = createQueue();
 
     // Point to the head of the process list
     Node *processPointer = processes->front;
 
-    // Check if there are processes to schedule
+    
     if (processes->front == NULL)
     {
         fprintf(stderr, "No processes to schedule\n");
@@ -84,7 +84,7 @@ averageStats shortest_remaining_time_p(Queue *processes)
                 }
             }
 
-            // Sort all the processes that have arrived based on their remaining time to completion
+            
             sort(processQueue, compareRemainingTime);
         }
 
@@ -100,7 +100,7 @@ averageStats shortest_remaining_time_p(Queue *processes)
             }
         }
 
-        // Execute the scheduled process or print an underscore if none is scheduled
+     
         if (scheduledProcess != NULL)
         {
             //add current running process to the time chart
@@ -126,10 +126,10 @@ averageStats shortest_remaining_time_p(Queue *processes)
             printf("_");
         }
 
-        // Increase the time quantum
+    
         timeQuantum++;
     }
 
-    // Print Process Statistics
+    
     return print_policy_stat(orderQueue);
 }
