@@ -1,4 +1,3 @@
-// roundrobin.c
 #include "algos.h"
 #include "process.h"
 #include "queue.h"
@@ -8,101 +7,97 @@
 averageStats roundRobinPreemptive(Queue *processes, int time_slice) {
     int t = 0;
 
-    // Creation of Process Queue
-    Queue *processQueue = (Queue *)createQueue();
-    Node *procPtr = processes->front;
+    // Create a queue for the processes to be scheduled
+    Queue *processQueue = createQueue();
+
+    // Pointer to traverse the list of processes
+    Node *processPointer = processes->front;
+
     if (processes->front == NULL) {
         fprintf(stderr, "No Process to schedule\n");
     }
 
-    // Keep checking while time quanta is less than 100 or the process queue is empty...
+    // Pointer to the currently scheduled process
     Process *scheduledProcess = NULL;
 
-    Queue *ll = createQueue();
+    // Create a queue to hold the processes in the order of execution
+    Queue *ll_queue = createQueue();
+
     printf("\nRound Robin Algorithm:\n");
-    Node *cur_node = NULL;
-    int cur_run = 0;
 
+    // Pointer to the current node in the processQueue
+    Node *currentProcNode = NULL;
+
+    int currentRun = 0;  // Current run within the time slice
+
+    // Keep checking while time quanta is less than 100 or the process queue is not empty
     while (t < 100 || processQueue->size > 0) {
-        // Check for incoming new process and do enqueue.
-        if (procPtr != NULL && t < 100) {
-            Process *newProcess = (Process *)(procPtr->data);
-            while (procPtr != NULL && newProcess->arrival_time <= t) {
+        // Check for incoming new processes and enqueue them
+        if (processPointer != NULL && t < 100) {
+            Process *newProcess = (Process *)(processPointer->data);
+            while (processPointer != NULL && newProcess->arrival_time <= t) {
                 enqueue(processQueue, newProcess);
-                procPtr = procPtr->next;
-                if (procPtr != NULL)
-                    newProcess = (Process *)(procPtr->data);
+                processPointer = processPointer->next;
+                if (processPointer != NULL)
+                    newProcess = (Process *)(processPointer->data);
             }
         }
 
-        // Check process queue and schedule it if there is no scheduled process now..
-        if (cur_node == NULL) {
-            cur_run = 0;
-            cur_node = processQueue->front;
-        } else if (cur_run == time_slice) {
-            cur_run = 0;
-            cur_node = cur_node->next;
-            if (cur_node == NULL) {
-                cur_node = processQueue->front;
+        // Check the process queue and schedule a process if needed
+        if (currentProcNode == NULL) {
+            currentRun = 0;
+            currentProcNode = processQueue->front;
+        } else if (currentRun == time_slice) {
+            currentRun = 0;
+            currentProcNode = currentProcNode->next;
+            if (currentProcNode == NULL) {
+                currentProcNode = processQueue->front;
             }
         }
 
-        if (cur_node != NULL) {
-            scheduledProcess = (Process *)cur_node->data;
-            Process *proc = scheduledProcess;
+        if (currentProcNode != NULL) {
+            // Get the scheduled process
+            scheduledProcess = (Process *)currentProcNode->data;
 
             if (t >= 100) {
                 if (scheduledProcess->startTime == -1) {
                     // Do not start any new process, remove it from processQueue
-                    // free(scheduledProcess);
-                    Node *next = cur_node->next;
-                    removeNode(processQueue,cur_node->data);
-                    cur_node = next;
-                    cur_run = 0;
+                    Node *next = currentProcNode->next;
+                    removeNode(processQueue,currentProcNode->data);
+                    currentProcNode = next;
+                    currentRun = 0;
                     continue;
                 }
             }
 
             // Add the currently running process to the time chart
-            printf("%c", proc->pid);
-            cur_run++;
+			printf("%c",scheduledProcess->pid);
+            currentRun++;
 
-            // Update the current processes stat
+            // Update the current process's stats
             if (scheduledProcess->startTime == -1) {
                 scheduledProcess->startTime = t;
             }
             scheduledProcess->executionTime++;
 
-            if (scheduledProcess->executionTime >= proc->runtime) {
-                //start+run
+
+            if (scheduledProcess->executionTime > scheduledProcess->runtime) {
+                // The process has completed its execution
                 scheduledProcess->endTime = t;
-                enqueue(ll, scheduledProcess);
-                Node *next = cur_node->next;
-                removeNode(processQueue,cur_node->data);
-                cur_node = next;
-                cur_run = 0;
+                enqueue(ll_queue, scheduledProcess);
+                Node *next = currentProcNode->next;
+                removeNode(processQueue,currentProcNode->data);
+                currentProcNode = next;
+                currentRun = 0;
             }
         } else {
+            // No process is scheduled, print an underscore to denote idle time
             printf("_");
         }
-
-        // Keep increasing the time
+        // Move to the next time quanta
         t++;
     }
 
     // Create the average statistics
-    return print_policy_stat(ll);
-
-    // Free allocated memory
-    // Modify this based on your specific memory allocation
-    // Node *currentNode = ll->front;
-    // while (currentNode != NULL) {
-    //     free(currentNode->data);
-    //     Node *temp = currentNode;
-    //     currentNode = currentNode->next;
-    //     free(temp);
-    // }
-    // free(ll);
-
-    // return avg;
+    return print_policy_stat(ll_queue);
 }
