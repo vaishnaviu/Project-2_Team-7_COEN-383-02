@@ -110,12 +110,12 @@ int main(int argc,char **argv) {
 // 	printf("Average Wait Time : %.1f\n",final[1].avgWaitTime);
 // 	printf("Average Turn Around Time :%.1f\n",final[1].avgTurnaround);
 // 	printf("Average throughput :%.1f\n",final[1].avgThroughput);
-// 	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
-// 	printf("Shortest Remaining Time First Preemptive:\n");
-// 	printf("Average Response Time : %.1f\n",final[2].avgResponseTime);
-// 	printf("Average Wait Time : %.1f\n",final[2].avgWaitTime);
-// 	printf("Average Turn Around Time :%.1f\n",final[2].avgTurnaround);
-// 	printf("Average throughput :%.1f\n",final[2].avgThroughput);
+	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
+	printf("Shortest Remaining Time First Preemptive:\n");
+	printf("Average Response Time : %.1f\n",final[2].avgResponseTime);
+	printf("Average Wait Time : %.1f\n",final[2].avgWaitTime);
+	printf("Average Turn Around Time :%.1f\n",final[2].avgTurnaround);
+	printf("Average throughput :%.1f\n",final[2].avgThroughput);
 	printf("-----------------------------------------------------------------------------------------------------------------------------\n");
 	printf("Round Robin Preemptive:\n");
 	printf("Average Response Time : %.1f\n",final[3].avgResponseTime);
