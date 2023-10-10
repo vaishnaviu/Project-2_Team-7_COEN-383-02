@@ -32,22 +32,12 @@ averageStats highest_priority_first_p(Queue *processes){
     linked_list* ll_3 = createQueue();
     linked_list* ll_4 = createQueue();
 
-<<<<<<< Updated upstream
-    Node *incoming_proc = processes->front;
-	if(incoming_proc == NULL) {
-		fprintf(stderr,"No Process to schedule\n");
-	}
-  printf("\nHighest Priority First Preemptive:\n");
-	//while process queue is not empty or time quanta is less than 100
-	Process * scheduledProcess = NULL;
-=======
     Node *process_pointer = processes->front;
 	  if(process_pointer == NULL) {
 		  fprintf(stderr,"No Process to schedule\n");
 	  }
-	  //while process queue is not empty or time quanta is less than 100
-	  Process * scheduledProcess = NULL;
->>>>>>> Stashed changes
+	//while process queue is not empty or time quanta is less than 100
+	Process * scheduledProcess = NULL;
 
     while(t<100 || scheduledProcess!=NULL){
 
@@ -101,14 +91,19 @@ averageStats highest_priority_first_p(Queue *processes){
 		}
 
         if(scheduledProcess != NULL) {
-          printf("%c",scheduledProcess->pid);
+  			//Process * proc = scheduledProcess->proc;
 
-          //update current processes stat
-          if(scheduledProcess->startTime == -1) {
-            scheduledProcess->startTime = t;
-          }
+  			//add current running process to the time chart
+  			//printf("%c",scheduledProcess->pid);
 
-          scheduledProcess->executionTime++;
+  			//update current processes stat
+  			if(scheduledProcess->startTime == -1) {
+  				scheduledProcess->startTime = t;
+  			}
+
+  			scheduledProcess->executionTime++;
+
+            //printf("Process name %c", proc->pid);
 
             if(scheduledProcess->executionTime >= scheduledProcess->runtime) {
                 scheduledProcess->endTime = t;
